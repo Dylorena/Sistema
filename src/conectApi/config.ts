@@ -8,14 +8,14 @@ export interface Ilogin {
   TypeRequest: number;
 }
 
-interface respPadrao<T> {
-  Code: null;  
+export interface respPadrao<T = string> {
+  Code: null;
   Message: string[] | [];
   Success: boolean;
   Value: T;
 }
 
-interface RespLogin extends respPadrao<string>{
+interface RespLogin extends respPadrao<string> {
   CpfCnpj: string;
   CurrentDate: string;
   EnvironmentName: string;
@@ -24,10 +24,6 @@ interface RespLogin extends respPadrao<string>{
   StatusIntegracao: number;
   Tokenized: boolean;
   User: string | null;
-}
-
-interface RespModulo extends respPadrao<Modulos[]>{
-
 }
 
 const api = axios.create({
@@ -50,11 +46,21 @@ async function entrar(obj: Ilogin): Promise<RespLogin> {
   return resp.data;
 }
 
-export async function getModules(): Promise<RespModulo> {
+export async function getModules(): Promise<respPadrao<Modulos[]>> {
   let session = sessionStorage.getItem('SessionID');
   if (session) {
     session = JSON.parse(session);
   }
   const resp = await api.get('restauth/modules', { headers: { 'Content-Type': 'application/json', User: 'admin', sessionid: session } });
   return resp.data;
+}
+
+export async function getEntities() {
+  let session = sessionStorage.getItem('SessionID');
+  if (session) {
+    session = JSON.parse(session);
+  }
+  const resp = await api.get('restauth/entitiesdeff', { headers: { 'Content-Type': 'application/json', User: 'admin', sessionid: session } });
+  console.log(resp);
+  
 }

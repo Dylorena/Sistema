@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Button } from 'reactstrap';
 import LZString from 'lz-string';
 import InputLogin from '../components/input/input';
-import { login, getModules } from '../conectApi/config';
+import { login, getModules, getEntities } from '../conectApi/config';
 import DefaultComponent from './defaultComponent/defaultComponent';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -43,8 +43,11 @@ class Login extends Component<props, state> {
     const resp = await login(obj);
     if (resp && resp.Success) {
       sessionStorage.setItem('SessionID', JSON.stringify(resp.Value));
+
       const respModules = await getModules();
       localStorage.setItem('Modules', JSON.stringify(respModules.Value));
+
+      getEntities();
       ReactDOM.render(<DefaultComponent />, document.getElementById('root'));
     } else {
       toast.error(resp.Message[0]);

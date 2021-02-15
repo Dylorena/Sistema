@@ -52,7 +52,7 @@ class modulesMenu extends React.Component<props, state> {
         <li key={index}>
           <button
             key={`b-${index}`}
-            onClick={this.teste.bind(this, module)}>
+            onClick={this.selectModule.bind(this, module)}>
             {module.Description}
             {module.SubItems !== null && <span><i className="fa fa-arrow-right" style={{ color: 'gray' }} /></span>}
           </button>
@@ -62,10 +62,15 @@ class modulesMenu extends React.Component<props, state> {
 
   }
 
-  teste(module: Modulos) {
+  selectModule(module: Modulos) {
     if (module.SubItems !== null) {
       this.setState({ moduleSelected: module.SubItems })
     }
+  }
+
+  returnMenu() {
+    this.setState({ moduleSelected: this.state.modules });
+    this.renderList();
   }
 
   render() {
@@ -74,6 +79,14 @@ class modulesMenu extends React.Component<props, state> {
         <aside id="asideModules" className="menu" >
           <h3 style={{ textAlign: 'center' }}>Módulos</h3>
           <ul>
+            {this.state.modules !== this.state.moduleSelected && (
+              <li>
+                <button
+                  key={`btn`}
+                  onClick={this.returnMenu.bind(this)}>
+                  <i className="fa fa-arrow-left" style={{ color: 'gray' }} />
+                </button>
+              </li>)}
             {this.renderList()}
           </ul>
         </aside>
