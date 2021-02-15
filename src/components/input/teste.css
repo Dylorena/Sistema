@@ -1,0 +1,36 @@
+div.login{
+  height: 250px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+div.teste{
+  border:1px solid #bbb8b8;
+  border-radius: 8px;
+}
+
+div.teste:focus-within{
+  border: 1px solid #82bf2e ;
+  box-shadow: 0 0 3px rgba(131, 191, 46, 0.603);
+  border-radius: 8px;
+}
+
+input,
+input:focus{
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+
+span.input-group-text{
+  background-color: white;
+  border: none;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding-right: .2rem;
+}
+
+input.form-control{
+  padding-left: 0.2rem;
+}
