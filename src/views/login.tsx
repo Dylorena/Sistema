@@ -2,7 +2,7 @@ import React, { ChangeEvent, Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'reactstrap';
 import LZString from 'lz-string';
-import InputLogin from '../components/input/input';
+import InputLogin from '../components/inputLogin/inputLogin';
 import { login, getModules, getEntities } from '../conectApi/config';
 import DefaultComponent from './defaultComponent/defaultComponent';
 import { ToastContainer, toast } from 'react-toastify';
@@ -47,7 +47,11 @@ class Login extends Component<props, state> {
       const respModules = await getModules();
       localStorage.setItem('Modules', JSON.stringify(respModules.Value));
 
-      getEntities();
+      let entidades = localStorage.getItem('entitiesdeff');
+      if (entidades === null) {
+        getEntities();
+      }
+
       ReactDOM.render(<DefaultComponent />, document.getElementById('root'));
     } else {
       toast.error(resp.Message[0]);

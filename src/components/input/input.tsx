@@ -1,30 +1,40 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { ChangeEvent, InputHTMLAttributes } from 'react';
-import { InputGroup, InputGroupAddon, InputGroupText, Input, InputProps, Row, Col } from 'reactstrap';
-import './teste.css';
+import React from 'react';
+import { Attributes } from '../entity/entity';
+import { DataType } from '../../enums';
 
-interface IInput extends InputHTMLAttributes<HTMLInputElement> {
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  icon: any;
+interface Props {
+  Attribute: Attributes;
 }
 
-type props = IInput & InputProps;
+class Input extends React.Component<Props, any> {
+  getMask(dataType: number) {
+    switch (dataType) {
+      case DataType.DateTime:
+        return '__/__/____ __:__:__';
+      default:
+        break;
+    }
+  }
 
-const InputLogin: React.FC<props> = ({ onChange, icon, ...prop }) => {
-  return (
-    <Row>
-      <Col>
-        <InputGroup className="teste">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>{icon}</InputGroupText>
-          </InputGroupAddon>
-          <Input onChange={onChange}  {...prop} />
-        </InputGroup>
-      </Col>
+  render() {
+    return (
+      <div>
+        <label
+          htmlFor={`${this.props.Attribute.Name}`}
+          style={{ color: this.props.Attribute.Required ? 'red' : '' }}
+        >{this.props.Attribute.Description}</label>
+        <input
+          type="text"
+          readOnly={this.props.Attribute.ReadOnly}
+          required={this.props.Attribute.Required}
+          style={{ width: this.props.Attribute.DisplayWidth }}
+          name={this.props.Attribute.Name}
+          placeholder={this.getMask(this.props.Attribute.DataType)}
+        />
+      </div>
 
-    </Row>
-
-  )
+    )
+  }
 }
 
-export default InputLogin;
+export default Input;

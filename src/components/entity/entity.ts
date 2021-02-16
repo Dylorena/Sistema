@@ -1,4 +1,5 @@
 import { respPadrao } from "../../conectApi/config";
+import { DataType } from "../../enums";
 
 enum ObjectType { Table, View, Select, Custom, ViewTable };
 
@@ -18,8 +19,8 @@ export interface KeyValue<K = string, T = string> {
 }
 
 // [] - criar as tipagens
-interface Entities {
-  Attributes: [];
+export interface Entities {
+  Attributes: Attributes[];
   AutoRefresh: number;
   BaseType: string;
   Command: string;
@@ -47,11 +48,22 @@ interface Entities {
   UrlSupport: string;
 }
 
-interface Operations {
+export interface Attributes {
+  Description: string;
+  Name: string;
+  DisplayWidth: number;
+  Required: boolean;
+  ReadOnly: boolean;
+  Type: number;
+  Visible: boolean;
+  DataType: DataType;
+}
+
+interface systemOperations {
 
 }
 
 export interface respEntity extends Omit<respPadrao, 'Value'> {
   Entities: KeyValue<number, Entities>[];
-  Operations: KeyValue<number, Operations>[];
+  Operations: KeyValue<number, systemOperations>[];
 }

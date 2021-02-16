@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Modulos } from '../components/modulesMenu/modulos';
+import { respEntity } from '../components/entity/entity';
 
 export interface Ilogin {
   User: string;
@@ -30,6 +31,10 @@ const api = axios.create({
   baseURL: '',
 });
 
+const apiEnt = axios.create({
+  baseURL: 'http://localhost:8080/',
+});
+
 export function login(obj: Pick<Ilogin, "User" | "Pass">) {
   const objLogin: Ilogin = {
     User: obj.User,
@@ -55,12 +60,20 @@ export async function getModules(): Promise<respPadrao<Modulos[]>> {
   return resp.data;
 }
 
+// export async function getEntities() {
+//   let session = sessionStorage.getItem('SessionID');
+//   if (session) {
+//     session = JSON.parse(session);
+//   }
+//   const resp = await api.get('restauth/entitiesdeff', { headers: { 'Content-Type': 'application/json', User: 'admin', sessionid: session } });
+//   console.log(resp.data);
+
+// }
+
 export async function getEntities() {
-  let session = sessionStorage.getItem('SessionID');
-  if (session) {
-    session = JSON.parse(session);
+  // Retornando somente 1 entidade
+  const resp = await apiEnt.get<respEntity>('dados', {});
+  if (resp && resp.data.Success) {
+    localStorage.setItem('entitiesdeff', JSON.stringify(resp.data.Entities));
   }
-  const resp = await api.get('restauth/entitiesdeff', { headers: { 'Content-Type': 'application/json', User: 'admin', sessionid: session } });
-  console.log(resp);
-  
 }
