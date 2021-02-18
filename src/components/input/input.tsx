@@ -4,13 +4,14 @@ import { DataType } from '../../enums';
 
 interface Props {
   Attribute: Attributes;
+  index: number;
 }
 
 class Input extends React.Component<Props, any> {
-  getMask(dataType: number) {
+  getPlaceholder(dataType: number) {
     switch (dataType) {
       case DataType.DateTime:
-        return '__/__/____ __:__:__';
+        return '_/__/____ __:__:__';
       default:
         break;
     }
@@ -21,19 +22,21 @@ class Input extends React.Component<Props, any> {
       <div>
         <label
           htmlFor={`${this.props.Attribute.Name}`}
-          style={{ color: this.props.Attribute.Required ? 'red' : '' }}
+          style={{ color: this.props.Attribute.Required ? 'red' : '', width: '170px', textAlign: 'right' }}
         >{this.props.Attribute.Description}</label>
         <input
+          key={`Input-${this.props.index}`}
           type="text"
+          className="inputs"
           readOnly={this.props.Attribute.ReadOnly}
           required={this.props.Attribute.Required}
           style={{ width: this.props.Attribute.DisplayWidth }}
           name={this.props.Attribute.Name}
-          placeholder={this.getMask(this.props.Attribute.DataType)}
+          placeholder={this.getPlaceholder(this.props.Attribute.DataType)}
         />
       </div>
 
-    )
+    );
   }
 }
 

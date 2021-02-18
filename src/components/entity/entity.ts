@@ -57,6 +57,17 @@ export interface Attributes {
   Type: number;
   Visible: boolean;
   DataType: DataType;
+
+  Source: string[];
+  Insert:boolean;
+  Update:boolean;
+  Delete:boolean;
+  grid: boolean;
+  MaxItems: number;
+  CollectionType: string;
+  PropertyFk: string;
+
+  
 }
 
 interface systemOperations {
