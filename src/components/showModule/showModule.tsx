@@ -5,11 +5,11 @@ import { AttrType } from '../../enums';
 import Input from '../input/input';
 import Select from '../select/select';
 import Collection from '../collection/collection';
+import InputReference from '../reference/reference';
 
 interface state {
   collection: Attributes[];
   Inputs: Attributes[];
-  // collectionSelected: Attributes;
 }
 
 interface props {
@@ -23,7 +23,6 @@ class ShowModule extends React.Component<props, state> {
     this.state = {
       collection: [],
       Inputs: [],
-      // collectionSelected: {} ,
     }
   }
 
@@ -33,7 +32,7 @@ class ShowModule extends React.Component<props, state> {
       const entity: KeyValue<number, Entities>[] = JSON.parse(att);
       let tempCollection: Attributes[] = [];
       let tempInputs: Attributes[] = [];
-      _.map(entity[0].Value.Attributes, (atrib) => {
+      _.map(entity[1].Value.Attributes, (atrib) => {
         if (atrib.Type === AttrType.Collection) {
           tempCollection.push(atrib);
         } else {
@@ -50,7 +49,20 @@ class ShowModule extends React.Component<props, state> {
     return <Collection Attributes={this.state.collection} />;
   }
 
+  ordenaComponents() {
+    this.state.Inputs.sort((a, b) => {
+      if (a.DefaultOrder < b.DefaultOrder) {
+        return -1;
+      } else if (a.DefaultOrder > b.DefaultOrder) {
+        return 1;
+      }
+      return 0;
+    })
+  }
+
   getInput() {
+    this.ordenaComponents();
+
     return _.map(this.state.Inputs, (atrib, index) => {
       if (atrib.Visible) {
         switch (atrib.Type) {
@@ -63,7 +75,7 @@ class ShowModule extends React.Component<props, state> {
           case AttrType.List:
             return <Select Attribute={atrib} />;
           case AttrType.Reference:
-            return;
+            return <InputReference Attribute={atrib} index={index} />;
           default:
             break;
         }
@@ -81,9 +93,12 @@ class ShowModule extends React.Component<props, state> {
           <div className="attributes container" style={{ width: '100%', height: '92%' }}>
             {this.getInput()}
           </div>
-          <button disabled={false}>Novo</button>
-          <button disabled={false}>Excluir</button>
-          <button disabled={true}>Salvar</button>
+          <div style={{ display: 'fixed', marginTop: '20px' }}>
+            {/* Definido se é disabled na collection Ativa/selecionada
+            <button disabled={this.state.collectionSelected.Insert}>Novo</button>
+            <button disabled={this.state.collectionSelected.Delete}>Excluir</button>
+            <button disabled={this.state.collectionSelected.Update}>Salvar</button> */}
+          </div>
         </div>
       </main>
     );
