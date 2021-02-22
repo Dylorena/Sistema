@@ -51,23 +51,25 @@ export interface Entities {
 export interface Attributes {
   Description: string;
   Name: string;
+  DefaultOrder: number;
+  DisplayOnReference: string[] | null;
   DisplayWidth: number;
+  DisplayHeight: number;
   Required: boolean;
   ReadOnly: boolean;
   Type: number;
   Visible: boolean;
   DataType: DataType;
 
-  Source: string[];
-  Insert:boolean;
-  Update:boolean;
-  Delete:boolean;
-  grid: boolean;
+  Source: string[] | null;
+  Insert: boolean;
+  Update: boolean;
+  Delete: boolean;
+  Grid: boolean;
   MaxItems: number;
-  CollectionType: string;
-  PropertyFk: string;
+  CollectionType: string | null;
+  PropertyFk: string | null;
 
-  
 }
 
 interface systemOperations {
