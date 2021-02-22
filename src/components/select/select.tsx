@@ -7,7 +7,7 @@ interface Props {
 }
 
 class Select extends React.Component<Props, any> {
-  getOptions(source: string[]) {   
+  getOptions(source: string[]) {
     return _.map(source, (op, index) => {
       return <option id={`op-${index}`} value={index} >{op}</option>
     });
@@ -25,7 +25,7 @@ class Select extends React.Component<Props, any> {
           id=""
           style={{ width: this.props.Attribute.DisplayWidth }}
           className="inputs">
-          {this.getOptions(this.props.Attribute.Source)}
+          {this.props.Attribute.Source !== null && this.getOptions(this.props.Attribute.Source)}
         </select>
       </div>
 

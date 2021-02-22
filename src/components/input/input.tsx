@@ -1,6 +1,7 @@
 import React from 'react';
 import { Attributes } from '../entity/entity';
 import { DataType } from '../../enums';
+import './input.scss';
 
 interface Props {
   Attribute: Attributes;
@@ -10,32 +11,44 @@ interface Props {
 class Input extends React.Component<Props, any> {
   getPlaceholder(dataType: number) {
     switch (dataType) {
+      case DataType.Date:
+        return '__/__/__';
       case DataType.DateTime:
-        return '_/__/____ __:__:__';
+        return '__/__/____ __:__:__';
       default:
         break;
     }
   }
 
+  getDisplayOnReference(campo: Attributes) {
+    console.log(this.props.Attribute.DisplayOnReference !== null);
+    
+    return <div style={{ fontSize: '0.85em' }}>
+      <label style={{ width: '290px', textAlign: 'right' }}>{campo.Description}: </label>
+      <span></span>
+    </div>
+  }
+
   render() {
+    const { Attribute, index } = this.props;
     return (
       <div>
         <label
-          htmlFor={`${this.props.Attribute.Name}`}
-          style={{ color: this.props.Attribute.Required ? 'red' : '', width: '170px', textAlign: 'right' }}
-        >{this.props.Attribute.Description}</label>
+          htmlFor={`${Attribute.Name}`}
+          style={{ color: Attribute.Required ? 'red' : '', width: '170px', textAlign: 'right' }}
+        >{Attribute.Description}</label>
         <input
-          key={`Input-${this.props.index}`}
+          key={`Input-${index}`}
           type="text"
           className="inputs"
-          readOnly={this.props.Attribute.ReadOnly}
-          required={this.props.Attribute.Required}
-          style={{ width: this.props.Attribute.DisplayWidth }}
-          name={this.props.Attribute.Name}
-          placeholder={this.getPlaceholder(this.props.Attribute.DataType)}
+          readOnly={Attribute.ReadOnly}
+          required={Attribute.Required}
+          style={{ width: Attribute.DisplayWidth, height: Attribute.DisplayHeight }}
+          name={Attribute.Name}
+          placeholder={this.getPlaceholder(Attribute.DataType)}
         />
+        {/* {this.getDisplayOnReference()} */}
       </div>
-
     );
   }
 }

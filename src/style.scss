@@ -22,3 +22,34 @@ select.inputs{
     box-shadow: 0 0 3px rgba(131, 191, 46, 0.603) !important;
   }
 }
+
+.focusOut{
+  border-radius: 0 !important;
+  display: table;
+
+  &:focus-within{
+    border: 1px solid #82bf2e ;
+    box-shadow: 0 0 3px rgba(131, 191, 46, 0.603);
+    outline: none;
+  }
+
+  input{
+    border-radius: 0 !important;
+
+    &:focus{
+      outline: none;
+    }
+  }
+
+  input:nth-child(1){
+    text-align: right;
+  }
+
+  input:nth-child(2){
+    border-left: 1px solid gray !important;
+  }
+}
+
+label{
+  margin-right: 10px;
+}
